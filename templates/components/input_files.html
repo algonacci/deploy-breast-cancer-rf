@@ -1,0 +1,20 @@
+<div class="row justify-content-center mt-5">
+    <div class="col-6">
+        <div class="form-group text-center">
+            <label for="imageInput">Upload Image</label>
+            <div class="mb-3 mt-3">
+                <input type="file" accept="image/*" class="form-control" name="file" onchange="loadFile(event)"
+                    id="imageInput" required />
+            </div>
+        </div>
+        <div class="col-lg-12 justify-content-center d-flex p-3">
+            <img id="output" width="50%" height="50%" />
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-6 text-center">
+        <button type="submit" class="btn btn-primary">Predict</button>
+    </div>
+</div>

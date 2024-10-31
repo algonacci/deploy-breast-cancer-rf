@@ -1,0 +1,12 @@
+<script>
+    function loadFile(event) {
+        const output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function () {
+            URL.revokeObjectURL(output.src); // free memory
+        };
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76A2z8EgyIltF3D7tC97wpb0lbw3t63t5o4sDl5r/ORN6CIf0Gns7xZXIKjhy3f"
+    crossorigin="anonymous"></script>
