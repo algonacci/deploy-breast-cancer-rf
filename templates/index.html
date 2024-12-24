@@ -29,21 +29,34 @@
             </div>
         </div>
 
-        <!-- Second row: Prediction Result -->
+        <!-- Second row: Prediction Results -->
         <div class="row mt-4">
-            <div class="col-lg-12 d-flex justify-content-center">
-                <div class="card" style="width: 50%;">
+            <div class="col-lg-6 d-flex justify-content-center">
+                <div class="card" style="width: 75%;">
                     <div class="card-body text-center">
-                        <h5 class="card-title">Breast Cancer Classification Result</h5>
+                        <h5 class="card-title">Optimized Model Result (PSO)</h5>
                         <p class="card-text">
-                            Predicted Class: <strong>{{ prediction }}</strong>
+                            Predicted Class: <strong>{{ prediction.optimized.predicted_class }}</strong>
                             <br />
-                            Confidence Score: {{ confidence_score }}
+                            Confidence Score: {{ prediction.optimized.confidence_score }}%
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 d-flex justify-content-center">
+                <div class="card" style="width: 75%;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Unoptimized Model Result</h5>
+                        <p class="card-text">
+                            Predicted Class: <strong>{{ prediction.unoptimized.predicted_class }}</strong>
+                            <br />
+                            Confidence Score: {{ prediction.unoptimized.confidence_score }}%
                         </p>
                     </div>
                 </div>
             </div>
         </div>
+
 
         <!-- Back to Home Button -->
         <div class="row justify-content-center mt-3 mb-3">

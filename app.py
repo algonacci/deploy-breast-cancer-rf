@@ -16,21 +16,20 @@ def upload_file():
             resized_image = cv2.resize(image, (256, 256))
             cv2.imwrite(file_path, resized_image)
 
-
             processed_image = process_and_save_image(file_path)
             processed_image_path = os.path.join('static', 'processed_' + file.filename)
             cv2.imwrite(processed_image_path, processed_image)
 
-            prediction, confidence_score = predict_image(file_path)
-            
+            predictions = predict_image(file_path)
+
             return render_template(
                 'index.html', 
-                prediction=prediction, 
-                confidence_score=f"{confidence_score:.2f}%", 
+                prediction=predictions, 
                 image_path=file_path, 
                 processed_image_path=processed_image_path
             )
-    return render_template('index.html', prediction=None, confidence_score=None, image_path=None, processed_image_path=None)
+    return render_template('index.html', prediction=None, image_path=None, processed_image_path=None)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -5,7 +5,9 @@ from skimage.feature import graycomatrix, graycoprops, local_binary_pattern
 
 # Load model and scaler
 with open('best_model.pkl', 'rb') as model_file:
-    loaded_model = pickle.load(model_file)
+    best_model = pickle.load(model_file)
+with open('rf_standard_model.pkl', 'rb') as standard_model_file:
+    standard_model = pickle.load(standard_model_file)
 with open('scaler.pkl', 'rb') as scaler_file:
     scaler = pickle.load(scaler_file)
 
@@ -24,14 +26,30 @@ def predict_image(image_path):
     # Extract features and scale them
     features = extract_features(image_path).reshape(1, -1)
     features_scaled = scaler.transform(features)
-    
-    # Get model predictions
-    prediction_probs = loaded_model.predict_proba(features_scaled)[0]
-    predicted_class_index = np.argmax(prediction_probs)
-    confidence_score = prediction_probs[predicted_class_index] * 100  # Convert to percentage
 
-    predicted_class = class_names[predicted_class_index]
-    return predicted_class, confidence_score
+    # Optimized model predictions
+    best_probs = best_model.predict_proba(features_scaled)[0]
+    best_class_index = np.argmax(best_probs)
+    best_confidence_score = best_probs[best_class_index] * 100
+    best_predicted_class = class_names[best_class_index]
+
+    # Standard model predictions
+    standard_probs = standard_model.predict_proba(features_scaled)[0]
+    standard_class_index = np.argmax(standard_probs)
+    standard_confidence_score = standard_probs[standard_class_index] * 100
+    standard_predicted_class = class_names[standard_class_index]
+
+    return {
+        "optimized": {
+            "predicted_class": best_predicted_class,
+            "confidence_score": best_confidence_score
+        },
+        "unoptimized": {
+            "predicted_class": standard_predicted_class,
+            "confidence_score": standard_confidence_score
+        }
+    }
+
 
 def extract_features(image_path, image_size=(256, 256)):
     # Read and process the image as described in your original code
